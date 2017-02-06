@@ -14,5 +14,9 @@
     ],
     "autoload": {
     	"classmap": ["lib/"]
+    },
+    "require": {
+        "pear/mail_mime": "^1.10",
+        "pear/mail_mime-decode": "1.5.5.2"
     }
 }

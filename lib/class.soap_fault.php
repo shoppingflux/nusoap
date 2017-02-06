@@ -85,6 +85,3 @@ class nusoap_fault extends nusoap_base {
  */
 class soap_fault extends nusoap_fault {
 }
-
-
-?>
