@@ -62,7 +62,7 @@
  *
  * This package depends on PEAR to raise errors.
  */
-require_once 'PEAR.php';
+require_once __DIR__ . '/PEAR.php';
 
 
 /**

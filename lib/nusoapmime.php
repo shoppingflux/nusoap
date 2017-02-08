@@ -40,7 +40,7 @@ http://www.nusphere.com
 /*require_once('nusoap.php');*/
 /* PEAR Mail_MIME library */
 require_once __DIR__ . '/mimeDecode.php';
-require_once __DIR__ . 'mimePart.php';
+require_once __DIR__ . '/mimePart.php';
 
 /**
 * nusoap_client_mime client supporting MIME attachments defined at
