@@ -75,8 +75,6 @@ if (! class_exists('PEAR', false)) {
     $GLOBALS['_PEAR_shutdown_funcs']         = [];
     $GLOBALS['_PEAR_error_handler_stack']    = [];
 
-    @ini_set('track_errors', true);
-
     /**
      * Base class for other PEAR classes.  Provides rudimentary
      * emulation of destructors.
@@ -761,7 +759,7 @@ if (! class_exists('PEAR', false)) {
         {
             if (! extension_loaded($ext)) {
                 // if either returns true dl() will produce a FATAL error, stop that
-                if ((ini_get('enable_dl') != 1) || (ini_get('safe_mode') == 1)) {
+                if ((ini_get('enable_dl') != 1)) {
                     return false;
                 }
                 if (OS_WINDOWS) {
@@ -796,7 +794,7 @@ if (! class_exists('PEAR', false)) {
             if (@PEAR::getStaticProperty('PEAR', 'destructlifo')) {
                 $_PEAR_destructor_object_list = array_reverse($_PEAR_destructor_object_list);
             }
-            while (list($k, $objref) = each($_PEAR_destructor_object_list)) {
+            foreach ($_PEAR_destructor_object_list as $objref) {
                 $classname = get_class($objref);
                 while ($classname) {
                     $destructor = "_$classname";
@@ -885,11 +883,6 @@ if (! class_exists('PEAR_Error', false)) {
             $this->code     = $code;
             $this->mode     = $mode;
             $this->userinfo = $userinfo;
-            if (function_exists("debug_backtrace")) {
-                if (@! PEAR::getStaticProperty('PEAR_Error', 'skiptrace')) {
-                    $this->backtrace = debug_backtrace();
-                }
-            }
             if ($mode & PEAR_ERROR_CALLBACK) {
                 $this->level    = E_USER_NOTICE;
                 $this->callback = $options;

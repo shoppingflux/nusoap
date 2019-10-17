@@ -295,15 +295,7 @@ class Mail_mimePart
                 $encoded['body'] = $this->_getEncodedData($this->_body, $this->_encoding);
             } else {
                 if ($this->_body_file) {
-                    // Temporarily reset magic_quotes_runtime for file reads and writes
-                    if ($magic_quote_setting = get_magic_quotes_runtime()) {
-                        @ini_set('magic_quotes_runtime', 0);
-                    }
                     $body = $this->_getEncodedDataFromFile($this->_body_file, $this->_encoding);
-                    if ($magic_quote_setting) {
-                        @ini_set('magic_quotes_runtime', $magic_quote_setting);
-                    }
-
                     if (PEAR::isError($body)) {
                         return $body;
                     }
@@ -347,18 +339,9 @@ class Mail_mimePart
             return $err;
         }
 
-        // Temporarily reset magic_quotes_runtime for file reads and writes
-        if ($magic_quote_setting = get_magic_quotes_runtime()) {
-            @ini_set('magic_quotes_runtime', 0);
-        }
-
         $res = $this->_encodePartToFile($fh, $boundary, $skip_head);
 
         fclose($fh);
-
-        if ($magic_quote_setting) {
-            @ini_set('magic_quotes_runtime', $magic_quote_setting);
-        }
 
         return PEAR::isError($res) ? $res : $this->_headers;
     }
@@ -579,7 +562,7 @@ class Mail_mimePart
         $escape = '=';
         $output = '';
 
-        while (list($idx, $line) = each($lines)) {
+        foreach ($lines as $idx => $line) {
             $newline = '';
             $i       = 0;
 
